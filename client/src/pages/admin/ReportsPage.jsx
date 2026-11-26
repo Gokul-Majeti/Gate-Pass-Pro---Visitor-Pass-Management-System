@@ -1,6 +1,6 @@
 import { Download, Search } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { api, extractErrorMessage, getStoredToken } from '../../api/client.js';
+import { api, extractErrorMessage, getReportExportUrl } from '../../api/client.js';
 import { StatusBadge } from '../../components/StatusBadge.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -44,8 +44,7 @@ export function ReportsPage() {
 
   const handleExportCsv = () => {
     const qs = buildQueryString();
-    const token = encodeURIComponent(getStoredToken());
-    window.open(`/api/reports/export?token=${token}&${qs}`, '_blank');
+    window.open(getReportExportUrl(qs), '_blank');
   };
 
   return (

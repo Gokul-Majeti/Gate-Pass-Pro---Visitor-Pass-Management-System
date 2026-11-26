@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const TOKEN_KEY = 'gatepass_jwt_token';
+const API_ORIGIN = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
 
 export const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${API_ORIGIN}/api`,
 });
 
 export function getStoredToken() {
@@ -33,7 +34,18 @@ export function extractErrorMessage(err, fallback = 'Something went wrong') {
   return err?.response?.data?.message || err?.message || fallback;
 }
 
+export function resolveAssetUrl(url) {
+  if (!url) return '';
+  if (/^(https?:|data:|blob:)/i.test(url)) return url;
+  return `${API_ORIGIN}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
 export function getPassPdfUrl(passId, download = false) {
   const token = encodeURIComponent(getStoredToken());
-  return `/api/passes/${passId}/pdf?token=${token}${download ? '&download=true' : ''}`;
+  return `${API_ORIGIN}/api/passes/${passId}/pdf?token=${token}${download ? '&download=true' : ''}`;
+}
+
+export function getReportExportUrl(queryString = '') {
+  const token = encodeURIComponent(getStoredToken());
+  return `${API_ORIGIN}/api/reports/export?token=${token}${queryString ? `&${queryString}` : ''}`;
 }

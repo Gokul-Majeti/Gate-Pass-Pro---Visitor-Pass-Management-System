@@ -1,6 +1,6 @@
 import { Search, ShieldAlert, ShieldCheck, User } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { api, extractErrorMessage } from '../../api/client.js';
+import { api, extractErrorMessage, resolveAssetUrl } from '../../api/client.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 export function VisitorsDirectoryPage() {
@@ -109,7 +109,7 @@ export function VisitorsDirectoryPage() {
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center shrink-0">
                           {v.photoUrl ? (
-                            <img src={v.photoUrl} alt={v.fullName} className="h-full w-full object-cover" />
+                            <img src={resolveAssetUrl(v.photoUrl)} alt={v.fullName} className="h-full w-full object-cover" />
                           ) : (
                             <User className="h-5 w-5 text-slate-400" />
                           )}

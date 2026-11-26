@@ -1,5 +1,5 @@
 import { Download, ExternalLink, MapPin, QrCode, ShieldAlert, User, X } from 'lucide-react';
-import { getPassPdfUrl } from '../api/client.js';
+import { getPassPdfUrl, resolveAssetUrl } from '../api/client.js';
 import { StatusBadge } from './StatusBadge.jsx';
 
 export function PassCardModal({ pass, organization, onClose, onRevoke }) {
@@ -40,7 +40,7 @@ export function PassCardModal({ pass, organization, onClose, onRevoke }) {
             <div className="h-16 w-16 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
               {visitor.photoUrl ? (
                 <img
-                  src={visitor.photoUrl}
+                  src={resolveAssetUrl(visitor.photoUrl)}
                   alt={visitor.fullName}
                   className="h-full w-full object-cover"
                 />

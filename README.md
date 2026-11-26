@@ -131,6 +131,18 @@ npm run build
 
 ---
 
+## Cloud Deployment (Render + Vercel)
+
+1. **Allow Cloud DB Access in MongoDB Atlas**: In **MongoDB Atlas → Security → Network Access**, add `0.0.0.0/0` (or your cloud provider's outbound IPs) so your hosted backend can connect.
+2. **Deploy Backend (`server/`) on Render** *(using included [render.yaml](render.yaml))*:
+   - Root Directory: `server` | Build Command: `npm ci --omit=dev` | Start Command: `node src/server.js`
+   - Environment variables: `NODE_ENV=production`, `MONGODB_URI=<your-atlas-uri>`, `JWT_SECRET=<secret>`, `QR_SIGNING_SECRET=<secret>`, `CLIENT_URL=https://<your-vercel-domain>.vercel.app`, `ALLOW_MEMORY_DB_FALLBACK=false`
+3. **Deploy Frontend (`client/`) on Vercel** *(using included [client/vercel.json](client/vercel.json))*:
+   - Root Directory: `client` | Framework Preset: `Vite` | Build Command: `npm run build` | Output Directory: `dist`
+   - Environment variable: `VITE_API_BASE_URL=https://<your-render-service>.onrender.com`
+
+---
+
 ## Core API Endpoints
 
 - `GET /api/health` — API and MongoDB connection status & document counts

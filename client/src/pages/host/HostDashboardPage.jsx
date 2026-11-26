@@ -1,7 +1,7 @@
 import { Check, User, UserPlus, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api, extractErrorMessage } from '../../api/client.js';
+import { api, extractErrorMessage, resolveAssetUrl } from '../../api/client.js';
 import { StatusBadge } from '../../components/StatusBadge.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -82,7 +82,7 @@ export function HostDashboardPage() {
                   <div className="h-11 w-11 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center shrink-0">
                     {apt.visitorId?.photoUrl ? (
                       <img
-                        src={apt.visitorId.photoUrl}
+                        src={resolveAssetUrl(apt.visitorId.photoUrl)}
                         alt={apt.visitorId.fullName}
                         className="h-full w-full object-cover"
                       />

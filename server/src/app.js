@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import fs from 'fs';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
@@ -36,7 +37,16 @@ export function createApp() {
   );
   app.use(
     cors({
-      origin: env.clientUrl,
+      origin(origin, callback) {
+        if (
+          !origin ||
+          env.allowedOrigins.includes('*') ||
+          env.allowedOrigins.includes(origin)
+        ) {
+          return callback(null, true);
+        }
+        return callback(new Error(`Origin '${origin}' is not allowed by CORS`), false);
+      },
       credentials: true,
     })
   );
@@ -88,6 +98,25 @@ export function createApp() {
   app.use('/api/reports', reportRoutes);
   app.use('/api/notifications', notificationRoutes);
   app.use('/api/audit-logs', auditRoutes);
+
+  const clientIndexHtml = path.join(env.clientDistDir, 'index.html');
+  const shouldServeClient =
+    env.serveClient === 'true' ||
+    (env.isProduction && env.serveClient !== 'false' && fs.existsSync(clientIndexHtml));
+
+  if (shouldServeClient) {
+    app.use(express.static(env.clientDistDir));
+    app.use((req, res, next) => {
+      if (
+        req.method === 'GET' &&
+        !req.path.startsWith('/api') &&
+        !req.path.startsWith('/uploads')
+      ) {
+        return res.sendFile(clientIndexHtml);
+      }
+      return next();
+    });
+  }
 
   app.use((req, res) => {
     res.status(404).json({

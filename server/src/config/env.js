@@ -27,6 +27,12 @@ const uploadDir = path.isAbsolute(uploadDirRaw)
   ? uploadDirRaw
   : path.resolve(serverRoot, uploadDirRaw);
 
+const clientUrlRaw = process.env.CLIENT_URL || 'http://localhost:5173';
+const allowedOrigins = clientUrlRaw
+  .split(',')
+  .map((item) => item.trim())
+  .filter(Boolean);
+
 export const env = {
   nodeEnv,
   isProduction,
@@ -39,7 +45,10 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   qrSigningSecret:
     process.env.QR_SIGNING_SECRET || 'dev_only_qr_hmac_secret_change_in_production_2026',
-  clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
+  clientUrl: clientUrlRaw,
+  allowedOrigins,
+  serveClient: process.env.SERVE_CLIENT,
+  clientDistDir: path.resolve(workspaceRoot, 'client/dist'),
   uploadDir,
   maxPhotoSizeMb: Number(process.env.MAX_PHOTO_SIZE_MB) || 5,
   smtp: {

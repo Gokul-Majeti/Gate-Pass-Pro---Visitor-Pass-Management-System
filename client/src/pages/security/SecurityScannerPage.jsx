@@ -13,7 +13,7 @@ import {
   User,
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { api, extractErrorMessage } from '../../api/client.js';
+import { api, extractErrorMessage, resolveAssetUrl } from '../../api/client.js';
 import { StatusBadge } from '../../components/StatusBadge.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -298,7 +298,7 @@ export function SecurityScannerPage() {
                     <div className="h-14 w-14 rounded-xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
                       {verification.pass?.visitorId?.photoUrl ? (
                         <img
-                          src={verification.pass.visitorId.photoUrl}
+                          src={resolveAssetUrl(verification.pass.visitorId.photoUrl)}
                           alt={verification.pass.visitorId.fullName}
                           className="h-full w-full object-cover"
                         />
