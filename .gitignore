@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment variables
+.env
+server/.env
+client/.env
+.env.local
+
+# Builds & outputs
+client/dist/
+dist/
+build/
+coverage/
+
+# Uploaded files (preserve folder)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs & OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+mongodb-binaries/
