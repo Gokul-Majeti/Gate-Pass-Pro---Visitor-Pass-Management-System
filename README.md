@@ -179,12 +179,3 @@ npm run build
 ### Visitor Reports & CSV Export
 ![Admin Reports and Export](docs/screenshots/06-admin-reports.png)
 
----
-
-## Short Demo Video Script (90 Seconds)
-
-1. **0:00–0:15 — Problem & Login**: Open `http://localhost:5173/login`, highlight multi-organization onboarding (`Create Account`) and role-based access (`Admin`, `Security`, `Host`, `Visitor`).
-2. **0:15–0:35 — Visitor Pre-Registration & Pass**: Sign in as **Visitor** (`visitor@example.com`), preview `VP-2026-100001` QR pass and **Download PDF Badge**, then submit a new pre-registration with webcam/file photo capture.
-3. **0:35–0:50 — Host Approval & Invite**: Sign in as **Host** (`host@apextech.com`), approve the pending visit in one click (triggering Email/SMS notifications) and show **Invite Visitor** with Gate OTP option.
-4. **0:50–1:10 — Security Gate Check-In/Out**: Sign in as **Security** (`security@apextech.com`), verify & check in a pass on the **Gate QR Scanner**, show **Walk-In Desk**, and check out an on-site visitor.
-5. **1:10–1:30 — Admin Analytics, Reports & Audit Logs**: Sign in as **Admin** (`admin@apextech.com`), showcase live **Analytics Dashboard** charts, filter & **Export CSV** in Reports, and inspect **Notification Logs** and **Audit Logs**.
